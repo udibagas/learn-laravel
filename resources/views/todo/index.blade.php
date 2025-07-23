@@ -43,6 +43,10 @@
                         </li>
                     @endforeach
                 </ul>
+
+                <div class="mt-4">
+                    {{ $todos->links() }}
+                </div>
             </div>
         </div>
     </div>

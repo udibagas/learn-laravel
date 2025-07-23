@@ -24,7 +24,7 @@ class TodoController extends Controller
         $todos = Todo::when(
             $title,
             fn($query, $title) => $query->where('title', 'ilike', "%{$title}%")
-        )->orderBy('id', 'desc')->get();
+        )->orderBy('id', 'desc')->paginate(10);
         return view('todo.index', compact('todos'));
     }
 
