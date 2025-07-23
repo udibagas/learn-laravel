@@ -2,8 +2,7 @@
     <div class="flex justify-center items-center bg-slate-100 min-h-screen">
         <div class="w-[600px] bg-white shadow-md rounded-lg p-6 mt-10">
             <h1 class="text-3xl">Todo App</h1>
-            <form action="/todo" method="POST">
-                @csrf
+            <form action="/todo" method="GET">
                 <div class="flex items-center mt-4">
                     <input name="title" type="text" placeholder="Search.."
                         class="border border-gray-300 rounded-lg p-2 flex-grow mr-4">

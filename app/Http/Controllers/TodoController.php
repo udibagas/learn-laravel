@@ -11,8 +11,9 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $title = $request->title;
         // raw query
         // $todos = DB::select("SELECT * FROM todos");
 
@@ -20,7 +21,10 @@ class TodoController extends Controller
         // $todos = DB::table('todos')->get();
 
         // eloquent
-        $todos = Todo::orderBy('id', 'desc')->get();
+        $todos = Todo::when(
+            $title,
+            fn($query, $title) => $query->where('title', 'ilike', "%{$title}%")
+        )->orderBy('id', 'desc')->get();
         return view('todo.index', compact('todos'));
     }
 
