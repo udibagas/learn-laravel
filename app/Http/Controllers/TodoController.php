@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTodoRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
@@ -39,8 +41,18 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTodoRequest $request)
     {
+        // $rules = [
+        //     'title' => 'required|string|max:255|min:5',
+        //     'description' => 'required|string',
+        //     'due_date' => 'required|date',
+        //     'priority' => 'required|in:low,medium,high',
+        // ];
+
+        // $request->validate($rules);
+        // Validator::make($request->all(), $rules)->validate();
+
         Todo::create($request->all());
         return redirect('/todo');
     }

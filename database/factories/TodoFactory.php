@@ -17,7 +17,11 @@ class TodoFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(5)
+            'title' => fake()->sentence(5),
+            'description' => fake()->paragraph(),
+            'due_date' => fake()->dateTimeBetween('now', '+1 month'),
+            'priority' => fake()->randomElement(['low', 'medium', 'high']),
+            'status' => fake()->boolean() ? 'completed' : 'pending',
         ];
     }
 }
