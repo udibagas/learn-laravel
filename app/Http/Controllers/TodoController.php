@@ -29,7 +29,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        return "Create TODO";
+        return view('todo.create');
     }
 
     /**
@@ -37,45 +37,41 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        // $value = $_POST['title'];
-        // $value = $request->post('title');
-        // $value = $request->input('title');
-        $value = $request->title;
-        Todo::create(['title' => $value]);
+        Todo::create($request->all());
         return redirect('/todo');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Todo $todo)
     {
-        //
+        return view('todo.show', compact('todo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Todo $todo)
     {
-        //
+        return view('todo.edit', compact('todo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Todo $todo)
     {
-        Todo::where('id', $id)->update(['status' => true]);
+        $todo->update($request->all());
         return redirect('/todo');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Todo $todo)
     {
-        Todo::where('id', $id)->delete();
+        $todo->delete();
         return redirect('/todo');
     }
 }
