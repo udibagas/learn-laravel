@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\TodoApiController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Http\Request;
@@ -9,4 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('/todo', TodoApiController::class);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::apiResource('/todo', TodoApiController::class)->middleware('auth:sanctum');

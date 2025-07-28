@@ -1,10 +1,14 @@
 GET http://localhost:8000/api/todo
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 3|oIov6j5ZHkqEzSpdbzMjq7xnOvLDUJh54fsr7JTn2a6994d3
 
 ###
 
-GET http://localhost:8000/api/todo/31
+GET http://localhost:8000/api/todo/3
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer oIov6j5ZHkqEzSpdbzMjq7xnOvLDUJh54fsr7JTn2a6994d3
 
 ###
 POST http://localhost:8000/api/todo
@@ -17,4 +21,14 @@ Accept: application/json
     "description": "Test todo from api",
     "priority": "",
     "due_date": "2025-08-08"
+}
+
+###
+POST http://localhost:8000/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "udibagas@gmail.com",
+    "password": "123456789"
 }
