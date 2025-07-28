@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTodoRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
     /**
+     *
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -26,7 +29,10 @@ class TodoController extends Controller
         $todos = Todo::when(
             $title,
             fn($query, $title) => $query->where('title', 'ilike', "%{$title}%")
-        )->orderBy('id', 'desc')->paginate(10);
+        )
+            ->where('user_id', Auth::id())
+            ->orderBy('id', 'desc')->paginate(10);
+
         return view('todo.index', compact('todos'));
     }
 
@@ -43,25 +49,29 @@ class TodoController extends Controller
      */
     public function store(CreateTodoRequest $request)
     {
-        // $rules = [
-        //     'title' => 'required|string|max:255|min:5',
-        //     'description' => 'required|string',
-        //     'due_date' => 'required|date',
-        //     'priority' => 'required|in:low,medium,high',
-        // ];
-
-        // $request->validate($rules);
-        // Validator::make($request->all(), $rules)->validate();
-
-        Todo::create($request->all());
+        $path = $request->file('file')->store('images');
+        $input = $request->all();
+        $input['attachment'] = $path;
+        Todo::create($input);
         return redirect('/todo');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Todo $todo)
+    public function show(Request $request, Todo $todo)
     {
+        // if ($todo->user_id !== Auth::id()) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+
+        // Gate::authorize('view-todo', $todo);
+
+        // if ($request->user()->cannot('view', $todo)) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+
+        Gate::authorize('view', $todo);
         return view('todo.show', compact('todo'));
     }
 
@@ -70,6 +80,7 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
+        Gate::authorize('update-todo', $todo);
         return view('todo.edit', compact('todo'));
     }
 
@@ -88,6 +99,20 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+        return redirect('/todo');
+    }
+
+    public function restore($id)
+    {
+        $todo = Todo::withTrashed()->findOrFail($id);
+        $todo->restore();
+        return redirect('/todo');
+    }
+
+    public function forceDelete($id)
+    {
+        $todo = Todo::withTrashed()->findOrFail($id);
+        $todo->forceDelete();
         return redirect('/todo');
     }
 }

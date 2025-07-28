@@ -29,6 +29,7 @@
     - Seeders and factories
     - Basic Eloquent models
     - CRUD operations
+    - Soft delete
     - Relationships (hasOne, hasMany, belongsTo)
 
 5. Forms & Validation

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class CreateTodoRequest extends FormRequest
 {
@@ -22,10 +23,12 @@ class CreateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255|min:5',
             'description' => 'required|string',
             'due_date' => 'required|date|after:today',
             'priority' => 'required|in:low,medium,high',
+            // 'file' => ['required', File::types(['png', 'jpg', 'jpeg'])->max('10mb')]
         ];
     }
 

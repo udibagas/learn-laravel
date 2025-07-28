@@ -3,7 +3,7 @@
         <div class="w-[600px] bg-white shadow-md rounded-lg p-6 mt-10">
             <h1 class="text-3xl">Create Todo</h1>
 
-            <form action="/todo" method="POST" class="mt-10 space-y-4">
+            <form action="/todo" method="POST" class="mt-10 space-y-4" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -30,6 +30,12 @@
                         <option value="medium" selected>Medium</option>
                         <option value="high">High</option>
                     </select>
+                </div>
+
+                <div>
+                    <label for="file" class="block text-sm font-medium text-gray-700">Attachment</label>
+                    <input type="file" name="file" class="mt-2 w-full border border-gray-300 rounded-lg p-2"
+                        placeholder="Select File">
                 </div>
 
                 <br>

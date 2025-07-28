@@ -21,7 +21,8 @@ class TodoFactory extends Factory
             'description' => fake()->paragraph(),
             'due_date' => fake()->dateTimeBetween('now', '+1 month'),
             'priority' => fake()->randomElement(['low', 'medium', 'high']),
-            'status' => fake()->boolean() ? 'completed' : 'pending',
+            'status' => fake()->boolean(),
+            'user_id' => random_int(1, 5)
         ];
     }
 }

@@ -1,0 +1,20 @@
+GET http://localhost:8000/api/todo
+
+###
+
+GET http://localhost:8000/api/todo/31
+Content-Type: application/json
+Accept: application/json
+
+###
+POST http://localhost:8000/api/todo
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": "",
+    "title": "Test todo from api",
+    "description": "Test todo from api",
+    "priority": "",
+    "due_date": "2025-08-08"
+}

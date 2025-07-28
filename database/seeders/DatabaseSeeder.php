@@ -15,15 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        // DB::insert("INSERT INTO todos (title) VALUES ('Belajar Laravel'), ('Belajar CSS'), ('Belajar JavaScript')");
-
+        User::factory(5)->create();
         Todo::factory(10)->create();
     }
 }
